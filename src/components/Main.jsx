@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Character from "./Character";
+import "./Character.css";
 
 class Main extends Component {
   state = {};
@@ -14,12 +15,13 @@ class Main extends Component {
       "https://thesimpsonsquoteapi.glitch.me/quotes?count=10"
     );
     this.setState({ apiData: result.data });
-    console.log(this.state.apiData);
+    // console.log(this.state.apiData);
   };
 
   delete = (charIndex) => {
-    this.state.apiData.splice(charIndex, 1);
-    console.log("triggered");
+    const apiData = this.state.apiData;
+    apiData.splice(charIndex, 1);
+    this.setState({ apiData });
   };
 
   render() {
@@ -31,7 +33,9 @@ class Main extends Component {
       <div className="charContainer">
         {apiData.map((char, i) => {
           return (
-            <Character charData={char} charIndex={i} delete={this.delete} />
+            <div className="charCard" key={i}>
+              <Character charData={char} charIndex={i} delete={this.delete} />
+            </div>
           );
         })}
       </div>

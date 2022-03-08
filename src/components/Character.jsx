@@ -1,34 +1,38 @@
 import React, { Component } from "react";
-import "./Character.css";
+import CharName from "./CharItems/CharName";
+import CharQuote from "./CharItems/CharQuote";
+import LikeBtn from "./CharItems/LikeBtn";
+import DeleteBtn from "./CharItems/DeleteBtn";
+import CharImg from "./CharItems/CharImg";
+import CharLiked from "./CharItems/CharLiked";
 
 class Character extends Component {
   state = { like: false };
+
+  like = () => {
+    this.setState({ like: !this.state.like });
+  };
 
   render() {
     const { charData } = this.props;
 
     return (
-      <div className="charCard" key={this.props.key}>
-        <h2 className="charName">{charData.character}</h2>
-        <q className="charQuote">{charData.quote}</q>
-        {this.state.like ? <p>You like!</p> : null}
-        <button
-          className="likeBtn"
-          onClick={() => this.setState({ like: !this.state.active })}
-        >
-          Like
-        </button>
-        <button className="deleteBtn" onClick={this.props.delete}>
-          Delete
-        </button>
-        <img
-          className={`charImg ${
-            charData.characterDirection === "Left" ? "leftImg" : "rightImg"
-          }`}
-          src={charData.image}
-          alt={charData.character}
+      <>
+        {charData.characterDirection === "Left" ? (
+          <CharImg charData={charData} />
+        ) : null}
+        <CharName charData={charData} />
+        <CharQuote charData={charData} />
+        {this.state.like ? <CharLiked /> : null}
+        <LikeBtn likeFn={this.like} like={this.state.like} />
+        <DeleteBtn
+          delete={this.props.delete}
+          charIndex={this.props.charIndex}
         />
-      </div>
+        {charData.characterDirection === "Right" ? (
+          <CharImg charData={charData} />
+        ) : null}
+      </>
     );
   }
 }
