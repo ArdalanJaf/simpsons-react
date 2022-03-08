@@ -17,6 +17,11 @@ class Main extends Component {
     console.log(this.state.apiData);
   };
 
+  delete = (charIndex) => {
+    this.state.apiData.splice(charIndex, 1);
+    console.log("triggered");
+  };
+
   render() {
     if (!this.state.apiData) return <p>Loading...</p>;
 
@@ -24,8 +29,10 @@ class Main extends Component {
 
     return (
       <div className="charContainer">
-        {apiData.map((char) => {
-          return <Character const charData={char} />;
+        {apiData.map((char, i) => {
+          return (
+            <Character charData={char} charIndex={i} delete={this.delete} />
+          );
         })}
       </div>
     );

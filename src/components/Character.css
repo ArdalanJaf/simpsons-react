@@ -1,0 +1,14 @@
+.charCard {
+  background-color: yellow;
+  display: flex;
+  height: 200px;
+  width: 500px;
+  border: solid 1px blue;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.charImg {
+  width: auto;
+  height: 100%;
+}
