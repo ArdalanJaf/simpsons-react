@@ -6,9 +6,10 @@ class CharImg extends Component {
     const { charData } = this.props;
     return (
       <img
-        className={`charImg ${
-          charData.characterDirection === "Left" ? "leftImg" : "rightImg"
-        }`}
+        // className={`charImg ${
+        //   charData.characterDirection === "Left" ? "leftImg" : "rightImg"
+        // }`}
+        className="charImg"
         src={charData.image}
         alt={charData.character}
       />
