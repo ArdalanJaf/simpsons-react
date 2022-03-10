@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Simpsons";
+  src: url("../public/simpsonfont/Simpsonfont\ DEMO.otf") format("opentype");
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -12,4 +17,78 @@ html {
   margin: auto;
   max-width: 800px;
   padding: 10px;
+}
+
+.main {
+  text-align: center;
+  font-family: "Simpsons", sans-serif;
+}
+
+.totalLikes {
+  font-size: 25px;
+  margin-top: 10px;
+}
+
+.charContainer {
+  width: 600px;
+  margin: auto;
+  padding-top: 20px;
+}
+
+.charCard {
+  background-color: yellow;
+  display: flex;
+  height: 200px;
+  width: 100%;
+  padding: 10px 20px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.charName {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.charQuote {
+  margin-top: 40px;
+  text-align: left;
+  flex-grow: 3;
+}
+
+.likeBtn,
+.deleteBtn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-weight: bold;
+  position: absolute;
+  bottom: 10px;
+  font-family: "Simpsons";
+}
+
+.likeBtn {
+  background-color: lightgreen;
+  left: 230px;
+}
+
+.liked {
+  background-color: rgb(28, 209, 28);
+}
+
+.deleteBtn {
+  background-color: rgb(253, 91, 91);
+  right: 230px;
+}
+
+.charImg {
+  width: auto;
+  height: 100%;
+}
+
+.leftImg {
+  order: -1;
+  margin-right: 10px;
 }

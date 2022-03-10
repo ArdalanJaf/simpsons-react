@@ -3,12 +3,14 @@ import React, { Component } from "react";
 class LikeBtn extends Component {
   state = {};
   render() {
+    const { charData } = this.props;
+
     return (
       <button
-        className="likeBtn"
-        onClick={() => this.props.likeUpdater(this.props.quote)}
+        className={`likeBtn ${charData.liked === true ? "liked" : null}`}
+        onClick={() => this.props.likeUpdater(charData)}
       >
-        {this.props.likes[this.props.quote] === true ? "Dislike" : "Like"}
+        {charData.liked === true ? "Liked!" : "Like"}
       </button>
     );
   }
