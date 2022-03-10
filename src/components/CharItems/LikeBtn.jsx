@@ -4,8 +4,11 @@ class LikeBtn extends Component {
   state = {};
   render() {
     return (
-      <button className="likeBtn" onClick={this.props.likeFn}>
-        {this.props.like ? "Dislike" : "Like"}
+      <button
+        className="likeBtn"
+        onClick={() => this.props.likeUpdater(this.props.quote)}
+      >
+        {this.props.likes[this.props.quote] === true ? "Dislike" : "Like"}
       </button>
     );
   }

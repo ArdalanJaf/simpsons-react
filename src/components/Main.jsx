@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import axios from "axios";
 import Character from "./Character";
 import "./Character.css";
+import Input from "./Input";
 
 class Main extends Component {
-  state = {};
+  state = { input: "", likes: {} };
 
   componentDidMount() {
     this.getApiData();
@@ -15,51 +16,68 @@ class Main extends Component {
       `https://thesimpsonsquoteapi.glitch.me/quotes?count=${num}`
     );
     this.setState({ apiData: result.data });
-    // console.log(this.state.apiData);
-    this.replaceDoubles(result.data);
   };
 
-  replaceDoubles = (stateData) => {
-    const apiData = stateData;
-    let newArr = [];
-    for (let i = 0; i < apiData.length; i++) {
-      if (newArr.includes(apiData[i].character)) {
-        apiData.splice(i, 1);
-      } else {
-        newArr.push(apiData[i].character);
-      }
-    }
-    // this.setState({ apiData });
-    // // console.log(this.state.apiData);
-    // console.log(apiData);
-    // console.log(10 - Object.entries(apiData).length);
-
-    // if (Object.entries(apiData).length > 10) {
-    //   // this.getApiData(10 - Object.entries(apiData).length);
-    //   console.log(10 - Object.entries(apiData).length);
-    // }
-  };
-
-  delete = (charIndex) => {
+  delete = (charIndex, quote) => {
     const apiData = this.state.apiData;
     apiData.splice(charIndex, 1);
     this.setState({ apiData });
+
+    const likes = this.state.likes;
+    delete likes[quote];
+    this.setState({ likes });
+  };
+
+  updateInput = (event) => {
+    this.setState({ input: event.target.value });
+  };
+
+  inputFilter = (char) => {
+    return char.character.toLowerCase().includes(this.state.input);
+  };
+
+  likeUpdater = (quote) => {
+    const likes = this.state.likes;
+    likes[quote] =
+      likes[quote] === undefined || likes[quote] === false ? true : false;
+    this.setState({ likes });
   };
 
   render() {
-    if (!this.state.apiData) return <p>Loading...</p>;
+    if (!this.state.apiData) return <p className="main">Loading...</p>;
 
     const { apiData } = this.state;
+    const { likes } = this.state;
+    const totalLikes = Object.values(likes).filter(
+      (char) => char === true
+    ).length;
 
     return (
-      <div className="charContainer">
-        {apiData.map((char, i) => {
-          return (
-            <div className="charCard" key={i}>
-              <Character charData={char} charIndex={i} delete={this.delete} />
-            </div>
-          );
-        })}
+      <div className="main">
+        <Input updateInput={this.updateInput} input={this.state.input} />
+
+        {totalLikes > 0 ? (
+          <p class="totalLikes">
+            Total likes:
+            {totalLikes}
+          </p>
+        ) : null}
+
+        <div className="charContainer">
+          {apiData.filter(this.inputFilter).map((char, i) => {
+            return (
+              <div className="charCard" key={i}>
+                <Character
+                  charData={char}
+                  charIndex={i}
+                  delete={this.delete}
+                  likeUpdater={this.likeUpdater}
+                  likes={likes}
+                />
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   }

@@ -7,15 +7,8 @@ import CharImg from "./CharItems/CharImg";
 import CharLiked from "./CharItems/CharLiked";
 
 class Character extends Component {
-  state = { like: false };
-
-  like = () => {
-    this.setState({ like: !this.state.like });
-  };
-
   render() {
     const { charData } = this.props;
-
     return (
       <>
         {charData.characterDirection === "Left" ? (
@@ -23,11 +16,16 @@ class Character extends Component {
         ) : null}
         <CharName charData={charData} />
         <CharQuote charData={charData} />
-        {this.state.like ? <CharLiked /> : null}
-        <LikeBtn likeFn={this.like} like={this.state.like} />
+        {this.props.likes[charData.quote] === true ? <CharLiked /> : null}
+        <LikeBtn
+          likeUpdater={this.props.likeUpdater}
+          likes={this.props.likes}
+          quote={charData.quote}
+        />
         <DeleteBtn
           delete={this.props.delete}
           charIndex={this.props.charIndex}
+          quote={charData.quote}
         />
         {charData.characterDirection === "Right" ? (
           <CharImg charData={charData} />
