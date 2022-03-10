@@ -2,27 +2,36 @@ import React, { Component } from "react";
 import Character from "./Character";
 
 class Characters extends Component {
-  inputFilter = (char) => {
+  mapFilter = (char) => {
     return char.character
       .toLowerCase()
-      .includes(this.props.input.toLowerCase());
+      .includes(this.props.input ? this.props.input.toLowerCase() : "");
+  };
+
+  sortOrder = (item1, item2) => {
+    const first = item1.character.toLowerCase();
+    const second = item2.character.toLowerCase();
+    return first < second ? -1 : first > second ? 1 : 0;
   };
 
   render() {
     return (
       <div className="charContainer">
-        {this.props.apiData.filter(this.inputFilter).map((char, i) => {
-          return (
-            <div className="charCard" key={i}>
-              <Character
-                charData={char}
-                charIndex={i}
-                deleteChar={this.props.deleteChar}
-                likeUpdater={this.props.likeUpdater}
-              />
-            </div>
-          );
-        })}
+        {this.props.apiData
+          .filter(this.mapFilter)
+          .sort(this.sortOrder)
+          .map((char, i) => {
+            return (
+              <div className="charCard" key={i}>
+                <Character
+                  charData={char}
+                  charIndex={i}
+                  deleteChar={this.props.deleteChar}
+                  likeUpdater={this.props.likeUpdater}
+                />
+              </div>
+            );
+          })}
       </div>
     );
   }

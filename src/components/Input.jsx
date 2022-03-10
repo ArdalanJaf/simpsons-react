@@ -7,8 +7,7 @@ class Input extends Component {
       <input
         className="searchInput"
         type="text"
-        value={this.props.input}
-        onChange={this.props.updateInput}
+        onInput={this.props.updateInput}
       ></input>
     );
   }

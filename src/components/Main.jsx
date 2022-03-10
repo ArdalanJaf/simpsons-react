@@ -4,11 +4,10 @@ import Joi from "joi";
 import Input from "./Input";
 import TotalLikes from "./TotalLikes";
 import Characters from "./Characters";
-// import "./Character.css";
+import { joiDataReorder } from "../util";
 
 class Main extends Component {
-  state = { input: "" };
-  //how do i not pre-write input into state?
+  state = { errors: {} };
 
   componentDidMount() {
     this.getApiData();
@@ -39,18 +38,36 @@ class Main extends Component {
     this.setState({ apiData });
   };
 
-  updateInput = (event) => {
-    this.setState({ input: event.target.value });
+  updateInput = async (event) => {
+    const input = { input: event.target.value };
+
+    this.setState({ ...input });
+
+    const schema = {
+      input: Joi.string()
+        .min(0)
+        .max(10)
+        .pattern(/^([^0-9]*)$/),
+    };
+
+    const _joiInstance = Joi.object(schema);
+    try {
+      await _joiInstance.validateAsync(input);
+      this.setState({ errors: {} });
+    } catch (errors) {
+      this.setState({ errors: joiDataReorder(errors.details) });
+    }
   };
 
   render() {
     if (!this.state.apiData) return <p className="main">Loading...</p>;
 
-    const { apiData, input } = this.state;
+    const { apiData, input, errors } = this.state;
 
     return (
       <div className="main">
-        <Input updateInput={this.updateInput} input={input} />
+        <Input updateInput={this.updateInput} />
+        {errors.input ? <p>{errors.input}</p> : null}
 
         <TotalLikes apiData={apiData} />
 
