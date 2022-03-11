@@ -44,6 +44,7 @@ html {
   border-radius: 20px;
   margin-bottom: 20px;
   position: relative;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
 }
 
 .charName {
@@ -67,6 +68,8 @@ html {
   position: absolute;
   bottom: 10px;
   font-family: "Simpsons";
+  border-color: black;
+  box-shadow: 0 2px 5px rgb(0 0 0 / 60%);
 }
 
 .likeBtn {
@@ -76,6 +79,7 @@ html {
 
 .liked {
   background-color: rgb(28, 209, 28);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 60%);
 }
 
 .deleteBtn {

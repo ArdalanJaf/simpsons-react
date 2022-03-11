@@ -7,15 +7,13 @@ import CharImg from "./CharItems/CharImg";
 
 class Character extends Component {
   render() {
-    const { charData, charIndex, likeUpdater, deleteChar } = this.props;
+    const { charData, likeUpdater, deleteChar } = this.props;
     return (
       <>
-        {/* <div className="textBox"> */}
         <CharName charData={charData} />
         <CharQuote charData={charData} />
         <LikeBtn charData={charData} likeUpdater={likeUpdater} />
-        <DeleteBtn deleteChar={deleteChar} charIndex={charIndex} />
-        {/* </div> */}
+        <DeleteBtn charData={charData} deleteChar={deleteChar} />
         <CharImg charData={charData} />
       </>
     );

@@ -5,7 +5,7 @@ class DeleteBtn extends Component {
     return (
       <button
         className="deleteBtn"
-        onClick={() => this.props.deleteChar(this.props.charIndex)}
+        onClick={() => this.props.deleteChar(this.props.charData)}
       >
         Delete
       </button>

@@ -20,19 +20,24 @@ class Main extends Component {
     this.setState({ apiData: result.data });
   };
 
-  deleteChar = (charIndex) => {
-    const apiData = this.state.apiData;
-    apiData.splice(charIndex, 1);
-    this.setState({ apiData });
-  };
-
-  likeUpdater = (propChar) => {
-    let index = this.state.apiData.findIndex((stateChar) => {
+  indexFinder = (propChar) => {
+    return this.state.apiData.findIndex((stateChar) => {
       return (
         stateChar.character === propChar.character &&
         stateChar.quote === propChar.quote
       );
     });
+  };
+
+  deleteChar = (propChar) => {
+    const apiData = this.state.apiData;
+    let index = this.indexFinder(propChar);
+    apiData.splice(index, 1);
+    this.setState({ apiData });
+  };
+
+  likeUpdater = (propChar) => {
+    let index = this.indexFinder(propChar);
     const apiData = [...this.state.apiData];
     apiData[index].liked = apiData[index].liked ? undefined : true;
     this.setState({ apiData });
@@ -67,7 +72,8 @@ class Main extends Component {
     return (
       <div className="main">
         <Input updateInput={this.updateInput} />
-        {errors.input ? <p>{errors.input}</p> : null}
+        {errors.input && <p>{errors.input}</p>}
+        {/* {<p>{errors.input}</p>} */}
 
         <TotalLikes apiData={apiData} />
 
