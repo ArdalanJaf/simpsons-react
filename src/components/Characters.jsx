@@ -15,9 +15,11 @@ class Characters extends Component {
   };
 
   render() {
+    const {apiData, deleteChar, likeUpdater} = this.props;
+    
     return (
       <div className="charContainer">
-        {this.props.apiData
+        {apiData
           .filter(this.mapFilter)
           .sort(this.sortOrder)
           .map((char, i) => {
@@ -25,9 +27,8 @@ class Characters extends Component {
               <div className="charCard" key={i}>
                 <Character
                   charData={char}
-                  charIndex={i}
-                  deleteChar={this.props.deleteChar}
-                  likeUpdater={this.props.likeUpdater}
+                  deleteChar={deleteChar}
+                  likeUpdater={likeUpdater}
                 />
               </div>
             );
